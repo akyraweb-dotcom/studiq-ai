@@ -30,22 +30,44 @@ app.get("/api", (req, res) => {
 });
 
 app.post("/api/lesson", (req, res) => {
-  const { topic, language, duration } = req.body;
+  const {
+    topic,
+    studentClass,
+    language,
+    duration,
+    mode,
+    style
+  } = req.body || {};
 
-  if (!topic || !language || !duration) {
+  if (
+    !topic ||
+    !studentClass ||
+    !language ||
+    !duration
+  ) {
     return res.status(400).json({
       success: false,
       message: "Please provide all lesson details."
     });
   }
 
+  if (String(topic).length > 1000) {
+    return res.status(400).json({
+      success: false,
+      message: "Topic is too long."
+    });
+  }
+
   res.json({
     success: true,
-    message: "Lesson request received!",
+    message: "Your STUDIQ lesson request was received!",
     lesson: {
       topic,
+      studentClass,
       language,
       duration,
+      mode: mode || "text",
+      style: style || "automatic",
       status: "pending"
     }
   });
