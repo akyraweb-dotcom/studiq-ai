@@ -1,0 +1,247 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STUDIQ - Smart Student Intelligence</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Arial,sans-serif;
+  background:#f5f8ff;color:#17233b;
+}
+header{
+  background:white;padding:16px 6%;
+  display:flex;justify-content:space-between;
+  align-items:center;box-shadow:0 2px 15px #0000000b;
+}
+.logo{font-size:27px;font-weight:900;color:#3269d9}
+.logo span{color:#9456df}
+.lang{padding:9px;border:1px solid #ddd;border-radius:10px}
+.hero{text-align:center;padding:48px 18px 25px}
+.hero h1{font-size:34px;margin-bottom:12px}
+.hero h1 span{color:#6555df}
+.hero p{color:#65718a;line-height:1.7}
+.container{max-width:650px;margin:20px auto;padding:15px}
+.card{
+ background:white;padding:23px;border-radius:20px;
+ box-shadow:0 8px 30px #263b6610;
+}
+.tabs{display:flex;gap:10px;margin-bottom:20px}
+.tabs button{
+ flex:1;padding:13px;border:0;border-radius:12px;
+ background:#edf1fb;font-weight:bold;cursor:pointer
+}
+.tabs button.active{background:#416de0;color:white}
+label{display:block;font-weight:bold;margin:15px 0 9px}
+textarea,input,select{
+ width:100%;padding:14px;border:1px solid #dce3f1;
+ border-radius:12px;font-size:15px;background:#fff
+}
+textarea{height:110px;resize:vertical}
+.upload{
+ border:2px dashed #8ca5e8;padding:27px;
+ border-radius:15px;text-align:center;
+ background:#f5f7ff;cursor:pointer
+}
+.upload input{margin-top:12px}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.primary{
+ width:100%;padding:16px;border:0;border-radius:13px;
+ background:linear-gradient(100deg,#416de0,#9455df);
+ color:white;font-size:17px;font-weight:bold;
+ margin-top:22px;cursor:pointer
+}
+.primary:disabled{opacity:.6}
+#preview{max-width:100%;max-height:220px;margin-top:12px;border-radius:12px}
+#message{text-align:center;margin-top:15px;color:#416de0}
+.features{
+ display:grid;grid-template-columns:repeat(2,1fr);
+ gap:12px;margin-top:22px
+}
+.feature{
+ background:white;padding:19px;border-radius:15px;
+ box-shadow:0 4px 15px #00000008
+}
+.feature b{display:block;margin-bottom:7px}
+.feature small{color:#758098;line-height:1.5}
+footer{text-align:center;padding:30px;color:#8390a5}
+@media(max-width:450px){
+ .hero h1{font-size:28px}
+ .card{padding:17px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">STUD<span>IQ</span></div>
+  <select class="lang" id="uiLanguage">
+    <option value="English">English</option>
+    <option value="Telugu">తెలుగు</option>
+  </select>
+</header>
+
+<section class="hero">
+  <h1>Learn Smarter with <span>STUDIQ</span></h1>
+  <p>Your AI Learning Companion ❤️<br>
+  Photo or Text → Educational Video</p>
+</section>
+
+<main class="container">
+<div class="card">
+  <h2>Create Your Learning Video 🎬</h2>
+  <p style="color:#77839a;margin-top:8px">
+    Upload a photo or type any topic.
+  </p>
+
+  <div class="tabs" style="margin-top:22px">
+    <button class="active" id="photoTab" onclick="switchTab('photo')">📸 Photo</button>
+    <button id="textTab" onclick="switchTab('text')">✍️ Text</button>
+  </div>
+
+  <div id="photoArea">
+    <label>Upload textbook photo</label>
+    <div class="upload">
+      <div style="font-size:35px">📚</div>
+      <b>Choose your photo</b>
+      <p style="color:#8490a5;margin-top:8px">JPG, PNG or WEBP</p>
+      <input type="file" id="photo" accept="image/*">
+      <img id="preview" hidden>
+    </div>
+  </div>
+
+  <div id="textArea" hidden>
+    <label>Enter your topic</label>
+    <textarea id="topic" placeholder="Example: Explain Photosynthesis in Telugu..."></textarea>
+  </div>
+
+  <label>Your Class</label>
+  <select id="studentClass">
+    <option value="">Select Class</option>
+    <option>6th Class</option>
+    <option>7th Class</option>
+    <option>8th Class</option>
+    <option>9th Class</option>
+    <option>10th Class</option>
+    <option>Intermediate 1st Year</option>
+    <option>Intermediate 2nd Year</option>
+  </select>
+
+  <div class="options">
+    <div>
+      <label>Video Language</label>
+      <select id="language">
+        <option>English</option>
+        <option>Telugu</option>
+      </select>
+    </div>
+    <div>
+      <label>Video Duration</label>
+      <select id="duration">
+        <option value="30-60 seconds">Short (30–60 sec)</option>
+        <option value="2-5 minutes">Detailed (2–5 min)</option>
+      </select>
+    </div>
+  </div>
+
+  <label>Video Style</label>
+  <select id="style">
+    <option>Automatic - Best for topic</option>
+    <option>3D Animation</option>
+    <option>AI Teacher</option>
+    <option>Cinematic Explanation</option>
+  </select>
+
+  <button class="primary" id="createBtn" onclick="createLesson()">
+    ✨ Create My Learning Video
+  </button>
+  <p id="message"></p>
+</div>
+
+<div class="features">
+  <div class="feature">🎬 <b>AI Videos</b><small>Learn through visual explanations.</small></div>
+  <div class="feature">🤖 <b>AI Teacher</b><small>Ask questions and understand concepts.</small></div>
+  <div class="feature">📸 <b>Photo Learning</b><small>Turn textbook photos into lessons.</small></div>
+  <div class="feature">💡 <b>Smart Learning</b><small>Simple Telugu and English explanations.</small></div>
+</div>
+</main>
+
+<footer>© 2026 STUDIQ · Smart Student Intelligence</footer>
+
+<script>
+let mode = "photo";
+
+function switchTab(selected){
+  mode = selected;
+  document.getElementById("photoArea").hidden = selected !== "photo";
+  document.getElementById("textArea").hidden = selected !== "text";
+  document.getElementById("photoTab").classList.toggle("active",selected==="photo");
+  document.getElementById("textTab").classList.toggle("active",selected==="text");
+}
+
+document.getElementById("photo").addEventListener("change",function(){
+  const file = this.files[0];
+  if(!file) return;
+  if(!file.type.startsWith("image/")){
+    alert("Please choose an image.");
+    this.value="";
+    return;
+  }
+  if(file.size > 10*1024*1024){
+    alert("Image must be smaller than 10 MB.");
+    this.value="";
+    return;
+  }
+  const preview=document.getElementById("preview");
+  preview.src=URL.createObjectURL(file);
+  preview.hidden=false;
+});
+
+async function createLesson(){
+  const topic = mode==="text"
+    ? document.getElementById("topic").value.trim()
+    : document.getElementById("photo").files[0]?.name;
+
+  const studentClass=document.getElementById("studentClass").value;
+  const language=document.getElementById("language").value;
+  const duration=document.getElementById("duration").value;
+  const btn=document.getElementById("createBtn");
+  const msg=document.getElementById("message");
+
+  if(!topic || !studentClass){
+    msg.textContent="Please enter a topic/photo and select your class.";
+    return;
+  }
+
+  btn.disabled=true;
+  btn.textContent="Sending request...";
+  msg.textContent="Connecting to STUDIQ...";
+
+  try{
+    const response=await fetch("/api/lesson",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        topic,
+        studentClass,
+        language,
+        duration,
+        mode,
+        style:document.getElementById("style").value
+      })
+    });
+
+    const data=await response.json();
+    msg.textContent=data.message || "Request received.";
+  }catch(error){
+    msg.textContent="Server connection failed. Please try again.";
+  }finally{
+    btn.disabled=false;
+    btn.textContent="✨ Create My Learning Video";
+  }
+}
+</script>
+</body>
+</html>
